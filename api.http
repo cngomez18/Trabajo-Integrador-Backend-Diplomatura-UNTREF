@@ -1,0 +1,34 @@
+### Ir a la pagina principal
+ http://localhost:3001
+
+### Mostrar toda la ropa
+GET http://localhost:3001/prenda
+
+### Buscar prenda por nombre, busqueda parcial
+GET http://localhost:3001/prenda/buscar?nombre=cam
+
+### Buscar por id
+GET http://localhost:3001/prenda/66901f6ec0e48cb101b6fc5b
+
+### Agregar una prenda
+POST http://localhost:3001/prenda
+content-type: application/json
+
+{
+    "codigo": 32, 
+    "nombre": "Para borrar!", 
+    "precio": 89.99, 
+    "categoria": "Outfit" 
+}
+
+### Modificar/Actualizar una prenda, (cambiar id por el que genera post!)
+PATCH http://localhost:3001/prenda/66a2813df8755029ff8b3bba
+content-type: application/json
+
+{
+    "nombre": "Hola, fui modificado!",
+    "categoria": ":P"
+}
+
+### Borrar una prenda por id, (cambiar id por el que genera post!)
+DELETE http://localhost:3001/prenda/66a2813df8755029ff8b3bba

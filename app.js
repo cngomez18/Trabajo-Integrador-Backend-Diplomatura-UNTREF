@@ -55,19 +55,42 @@ app.get('/prenda/:id', async (req, res) => {
   
 
 app.post('/prenda', async (req, res) => {
-    
+  try {
+    const nuevoProducto = new Product(req.body);
+    await nuevoProducto.save();
+    res.status(201).json(nuevoProducto);
+  } catch (error) {
+    res.status(400).json({ message: 'Error al crear el producto', error });
+  }
 });
 
 app.patch('/prenda/:id', async (req, res) => {
-    
+  try {
+    const productoPatch = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!productoPatch) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+    res.status(200).json(productoPatch);
+} catch (error) {
+    res.status(400).json({ message: 'Error al actualizar el producto', error });
+}
 });
   
   
 app.delete('/prenda/:id', async (req, res) => {
+  try {
+    const productoEliminado = await Product.findByIdAndDelete(req.params.id);
+    if (!productoEliminado) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+    res.status(200).json({ message: 'Producto eliminado' });
+} catch (error) {
+    res.status(500).json({ message: 'Error al eliminar el producto', error });
+}
 });
 
 app.use((req, res) => {
-    res.status(404).json({ message: 'Ruta no encontrada' });
+  res.status(404).json({ message: 'Ruta no encontrada' });
 });
   
 
